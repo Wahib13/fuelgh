@@ -1,0 +1,13 @@
+{% load staticfiles %}
+{% for omc in omc_list.all %}
+	<li class="mdl-list__item">
+	<span class="mdl-list__item-primary-content">
+	    <img src="{% static 'fuelprices/images/avatar.png' %}" style="width: 50px;height: 50px; margin: 10px">
+	    <span class="omc-text">{{omc.name}}</span>
+	</span>
+	<span class="mdl-list__item-secondary-content">
+	    <span class="mdl-list__fuel-price">{{omc.diesel_price}}</span>
+	    <span class="mdl-list__item-sub-title">{{omc.petrol_price}}</span>
+	</span>
+	</li>
+{% endfor %}
