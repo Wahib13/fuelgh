@@ -9,7 +9,7 @@ This app is currently running in open beta at http://fuelgh.com
 This repository is for a web app that displays prices of fuel in different companies in Ghana. Written in Python, using the Django web framework. In the absence of a publicly available API to update the prices, we manually update the prices using an Excel sheet from http://www.npa.gov.gh/. (See "How do I get set up?"). 
 There is the foundation for a basic REST API so we could possibly become that publicly available API for indicative prices for fuel in Ghana.
 
-### Who is this repository for? (Why become a Contributor)###
+### Who is this repository for? (Why become a Contributor) ###
 Almost all consumer products have a way consumers can compare prices and buy what suits their budget. I believe there is the need to create an authoritative source that tracks the prices of crude oil products and help consumers make an informed decision when buying diesel/petrol.
 If you share this belief, then kindly consider becoming a contributor.
 
