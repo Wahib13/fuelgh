@@ -25,7 +25,7 @@ SECRET_KEY = 'e%d^q^n@j+!6ht@6pyt_n0glzumzse&zymy-e4kd4tgq6_dro+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'fuelgh.com', 'www.fuelgh.com']
+ALLOWED_HOSTS = ['67.205.159.33', '127.0.0.1', 'fuelgh.com', 'www.fuelgh.com']
 
 
 # Application definition
