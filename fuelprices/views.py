@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
-from django.http import HttpResponse
-
-from django.http import HttpResponse, HttpResponseBadRequest
-from fuelprices.models import Omc
-from fuelprices.models import FuelStation
-from fuelprices.serializers import OmcSerializer
-from fuelprices.serializers import FuelStationSerializer
-from fuelprices.serializers import UserSerializer
-from fuelprices.permissions import IsOwnerOrReadOnly
-from rest_framework import generics
-from rest_framework import filters
-from rest_framework import permissions
 from django.contrib.auth.models import User
-from oauth2client import client, crypt
-import json
-from rest_framework.authtoken.models import Token
+from django.shortcuts import render
+from rest_framework import filters
+from rest_framework import generics
+from rest_framework import permissions
+
+from fuelprices.models import FuelStation
+from fuelprices.models import Omc
+from fuelprices.permissions import IsOwnerOrReadOnly
+from fuelprices.serializers import FuelStationSerializer
+from fuelprices.serializers import OmcSerializer
+from fuelprices.serializers import UserSerializer
 
 
 def index(request):
@@ -110,41 +105,3 @@ class FuelStationList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(uploader=self.request.user)
-
-
-# create token for Google users
-def googleUsers(request):
-    token = request.GET.get('token', None)
-
-    CLIENT_SECRET_FILE = '/fuelprices/client_secret_google_auth.json'
-    # visit the README for instructions on how to create yours
-    CLIENT_ID = '#yourclientsecret.apps.googleusercontent.com'
-
-    try:
-        idinfo = client.verify_id_token(token, CLIENT_ID)
-    except crypt.AppIdentityError:
-        idinfo = None
-
-    if idinfo is not None:
-        email_ = idinfo['email']
-        first_name_ = idinfo['given_name']
-        last_name_ = idinfo['family_name']
-
-        try:
-            user_ = User.objects.get(email=email_)
-        except User.DoesNotExist:
-            user_ = User.objects.create_user(username=email_, email=email_, first_name=first_name_,
-                                             last_name=last_name_, password='#save#')
-            token = Token.objects.create(user=user_)
-        token = Token.objects.get(user=user_)
-        user_data = {
-            'username': user_.username,
-            'email': user_.email,
-            'first_name': user_.first_name,
-            'last_name': user_.last_name,
-            'token': token.key,
-        }
-        user_data_json = json.dumps(user_data)
-        return HttpResponse(user_data_json, content_type='application/json')
-
-    return HttpResponseBadRequest

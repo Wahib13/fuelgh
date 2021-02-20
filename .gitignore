@@ -2,3 +2,6 @@
 *.xlsx
 config/production.ini
 *.idea/*
+*env/*
+*.sql
+fuelapp/local_settings.py

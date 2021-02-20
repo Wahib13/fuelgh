@@ -16,7 +16,7 @@ class OMC:
 
 # download the necessary file from NPA website, get workbook from excel file
 def download():
-    print 'Kindly input the url to the omc prices'
+    print('Kindly input the url to the omc prices')
     url = str(raw_input('>'))
     filename = wget.download(url)
     book = load_workbook(filename=filename)
