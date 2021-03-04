@@ -5,14 +5,12 @@ from django.contrib.auth.models import User
 
 
 class OmcSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = Omc
-        fields = ('id', 'name', 'diesel_price', 'petrol_price', 'owner')
+        fields = ('id', 'name', 'diesel_price', 'petrol_price')
 
     def create(self, validated_data):
-        #
         return Omc.objects.create(**validated_data)
 
     def update(self, instance, validated_data):

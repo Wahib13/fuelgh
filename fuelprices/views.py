@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import os
+
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from rest_framework import filters
 from rest_framework import generics
 from rest_framework import permissions
 
+from fuelprices import tasks
 from fuelprices.models import FuelStation
 from fuelprices.models import Omc
 from fuelprices.permissions import IsOwnerOrReadOnly
@@ -16,6 +19,9 @@ from fuelprices.serializers import UserSerializer
 
 
 def index(request):
+    # redis_client = redis.Redis(host='172.19.0.1')
+    # redis_client.set('foo', 'bar')
+    tasks.test_object_task.delay()
     return render(request, 'fuelprices/index.html', {})
 
 

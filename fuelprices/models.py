@@ -6,7 +6,6 @@ class Omc(models.Model):
     name = models.CharField(max_length=20, default='')
     diesel_price = models.DecimalField(max_digits=5, decimal_places=3, default=0)
     petrol_price = models.DecimalField(max_digits=5, decimal_places=3, default=0)
-    owner = models.ForeignKey('auth.User', related_name='Omcs', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
