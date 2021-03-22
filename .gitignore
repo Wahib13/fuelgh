@@ -3,5 +3,6 @@
 config/production.ini
 *.idea/*
 *env/*
+.env
 *.sql
-fuelapp/local_settings.py
+fuelgh/fuelapp/settings_local.py
