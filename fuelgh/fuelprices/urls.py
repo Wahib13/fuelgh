@@ -11,7 +11,6 @@ urlpatterns = [
     url(r'^api/omcs/(?P<pk>[0-9]+)/$', views.OmcDetail.as_view()),
 
     # FuelStations
-    # accepts omc longitude and latitude params
     url(r'^api/fuelstations/$', views.FuelStationList.as_view()),
     url(r'^api/fuelstations/(?P<pk>[0-9]+)/$', views.FuelStationDetail.as_view()),
 

@@ -15,7 +15,8 @@ services:
       - .env
     user: app_runner
     build: .
-    command: uwsgi --ini uwsgi.ini --socket :${SERVICE_PORT}
+    working_dir: /home/app_runner/code/fuelgh/
+    command: python manage.py test
     ports:
       - 18001:18001
     depends_on:
@@ -30,11 +31,11 @@ services:
       - 5432:5432
     volumes: 
       - ./docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8081:8080
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 8081:8080
   redis:
     image: redis
     command: redis-server
@@ -49,14 +50,3 @@ services:
     depends_on:
       - redis
       - web
-#  flower:
-#    env_file:
-#      - .env
-#    build:
-#      context: .
-#    working_dir: /home/app_runner/code/fuelgh
-#    command: flower -A fuelapp --port=5555
-#    depends_on:
-#      - celery_worker
-#    ports:
-#    - 5555:5555

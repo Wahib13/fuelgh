@@ -6,12 +6,12 @@ from openpyxl import load_workbook
 
 from fuelapp.celery import app
 from fuelprices.models import Omc
+from fuelprices.utils import fetch_latest_link
 
 
 @app.task(bind=True)
 def update_prices(self):
-    # TODO get the latest URL
-    url = "http://www.npa.gov.gh/images/npa/documents/indicative-prices/2021/Indicative_Prices_for_1st-15th__Mar_2021.xlsx"
+    url = fetch_latest_link()
     # download the file and save temporarily
     r = requests.get(url, stream=True)
     filename = '/home/app_runner/prices_latest.xlsx'
