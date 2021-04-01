@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  web:
+    env_file:
+      - .env
+    user: app_runner
+    build: .
+    volumes:
+      - ./fuelgh:/home/app_runner/code/fuelgh/
+    working_dir: /home/app_runner/code/fuelgh/
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - redis
+  db:
+    env_file:
+      - .env
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    volumes: 
+      - ./docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 8081:8080
+  redis:
+    image: redis
+    command: redis-server
+  celery_worker:
+    env_file:
+      - .env
+    user: app_runner
+    build:
+      context: .
+    working_dir: /home/app_runner/code/fuelgh
+    command: celery -A fuelapp worker -l info
+    depends_on:
+      - redis
+      - web

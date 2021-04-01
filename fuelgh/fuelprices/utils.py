@@ -44,4 +44,4 @@ def fetch_latest_link():
     download_page_link = fetch_link_from_download_page()
     # TODO use regex to extract date, making sure the latest link is always returned
     # re.search('(\d+)', home_page_link)
-    return home_page_link
+    return urllib.parse.urljoin(NPA_BASE_URL, home_page_link)

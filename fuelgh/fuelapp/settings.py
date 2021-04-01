@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework',
     'django_celery_results',
-    'drf_yasg'
+    'drf_yasg',
+    'django_filters',
 ]
 
 REST_FRAMEWORK = {
@@ -64,6 +65,16 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SWAGGER_SETTINGS = {
+    # 'SECURITY_DEFINITIONS': {
+    #     'Api Key': {
+    #
+    #     }
+    # }
+    'USE_SESSION_AUTH': False
+}
+
 
 ROOT_URLCONF = 'fuelapp.urls'
 

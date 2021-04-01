@@ -14,9 +14,6 @@ urlpatterns = [
     url(r'^api/fuelstations/$', views.FuelStationList.as_view()),
     url(r'^api/fuelstations/(?P<pk>[0-9]+)/$', views.FuelStationDetail.as_view()),
 
-    # Users
-    url(r'^api/users/$', views.UserList.as_view()),
-    url(r'^api/users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
 
     # url('^api/fuelstations/bylocation/$', views.FuelStationByLocation.as_view()),
 ]

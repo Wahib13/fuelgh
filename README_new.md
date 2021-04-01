@@ -20,5 +20,6 @@ If you share this belief, then kindly consider becoming a contributor.
 * Run **docker-compose up**
 * Enter a bash shell in the web service's container (fuelgh_web) and run **python manage.py migrate**
 * Run **python manage.py createsuperuser** and follow the prompts to create a super user
+* Run the tests **python manage.py test**
 * Run **python manage.py reload_omcs** to get the latest prices
 * Visit http://localhost/

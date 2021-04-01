@@ -51,12 +51,13 @@ class OmcList(generics.ListAPIView):
     queryset = Omc.objects.all()
     serializer_class = OmcSerializer
     filter_backends = (filters.OrderingFilter,)
+    ordering_fields = ['petrol_price', 'diesel_price']
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 
-class OmcDetail(generics.RetrieveUpdateDestroyAPIView):
+class OmcDetail(generics.RetrieveUpdateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Omc.objects.all()
     serializer_class = OmcSerializer
