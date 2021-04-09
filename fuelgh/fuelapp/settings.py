@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from celery.schedules import crontab
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -30,6 +32,14 @@ CELERY_BROKER_URL = f'redis://{os.environ["REDIS_HOST"]}:{os.environ["REDIS_PORT
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_BEAT_SCHEDULE = {
+    'reload_omcs': {
+        'task': 'fuelprices.tasks.update_prices',
+        # 'schedule': crontab(),
+        'schedule': crontab(minute=0, hour=0),
+    },
+}
 
 # Application definition
 
@@ -53,8 +63,12 @@ REST_FRAMEWORK = {
     # # or allow read-only access for unauthenticated users.
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'fuelprices.authentication.BearerAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-    )
+    ),
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,14 +81,15 @@ MIDDLEWARE = [
 ]
 
 SWAGGER_SETTINGS = {
-    # 'SECURITY_DEFINITIONS': {
-    #     'Api Key': {
-    #
-    #     }
-    # }
+    'SECURITY_DEFINITIONS': {
+        'Api Key': {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
     'USE_SESSION_AUTH': False
 }
-
 
 ROOT_URLCONF = 'fuelapp.urls'
 
@@ -149,3 +164,38 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'simple': {
+            'format': '{name}|{asctime}|{levelname}|{message}',
+            'style': '{'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+    },
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['console']
+    },
+    'loggers': {
+        'tasks': {
+            'handlers': ['console'],
+            'propagate': False,
+            'level': 'DEBUG'
+        },
+        'views': {
+            'handlers': ['console'],
+            'propagate': False,
+            'level': 'DEBUG'
+        }
+    }
+}

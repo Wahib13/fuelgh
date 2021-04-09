@@ -1,0 +1,14 @@
+version: "3.9"
+# live deployment
+services:
+  nginx:
+    env_file:
+      - .env
+    image: nginx
+    volumes:
+      - ./conf.d/:/etc/nginx/conf.d/
+      - ./fuelgh/static/:/etc/nginx/static/
+    ports:
+      - 80:80
+    depends_on:
+      - web

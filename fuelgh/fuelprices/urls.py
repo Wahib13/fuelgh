@@ -11,8 +11,8 @@ urlpatterns = [
     url(r'^api/omcs/(?P<pk>[0-9]+)/$', views.OmcDetail.as_view()),
 
     # FuelStations
-    url(r'^api/fuelstations/$', views.FuelStationList.as_view()),
-    url(r'^api/fuelstations/(?P<pk>[0-9]+)/$', views.FuelStationDetail.as_view()),
+    # url(r'^api/fuelstations/$', views.FuelStationList.as_view()),
+    # url(r'^api/fuelstations/(?P<pk>[0-9]+)/$', views.FuelStationDetail.as_view()),
 
 
     # url('^api/fuelstations/bylocation/$', views.FuelStationByLocation.as_view()),

@@ -19,3 +19,19 @@ class NPASheetDownloadTestCase(TestCase):
         assert home_page_link.endswith('.xlsx')
         assert download_page_link is not None
         assert download_page_link.endswith('.xlsx')
+
+    def testInitialOmcInsertion(self):
+        """
+        verify prices are inserted in empty table successfully (use the latest file)
+        """
+        pass
+
+    def testPriceUpdating(self):
+        """
+        verify existing prices will be overridden (use an older file)
+        """
+        pass
+
+
+class RESTAPITestCase(TestCase):
+    pass

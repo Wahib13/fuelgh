@@ -1,17 +1,30 @@
+import pytz
 from django.db import models
+from django.utils.datetime_safe import datetime
 
 
 class Omc(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=20, default='')
-    diesel_price = models.DecimalField(max_digits=5, decimal_places=3, default=0)
-    petrol_price = models.DecimalField(max_digits=5, decimal_places=3, default=0)
+    last_updated = models.DateTimeField()
+    name = models.CharField(max_length=20, default='', db_index=True)
+    diesel_price = models.DecimalField(max_digits=5, decimal_places=3, default=0, db_index=True)
+    petrol_price = models.DecimalField(max_digits=5, decimal_places=3, default=0, db_index=True)
+
+    def save(self, **kwargs):
+        self.last_updated = datetime.now(pytz.utc)
+        super().save()
 
     def __str__(self):
         return self.name
 
-    class Meta:
-        ordering = ('created',)
+
+class UpdateTask(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    task_id = models.CharField(max_length=36, db_index=True)
+    excel_file = models.FileField()
+
+    def __str__(self):
+        return str(self.created)
 
 
 class FuelStation(models.Model):
@@ -28,6 +41,3 @@ class FuelStation(models.Model):
 
     def __str__(self):
         return self.describer_string
-
-    class Meta:
-        ordering = ('created',)

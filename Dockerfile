@@ -7,7 +7,8 @@ ENV PATH "$PATH:/home/app_runner/.local/bin"
 
 WORKDIR /home/app_runner/code
 
-COPY fuelgh/requirements/prod.txt /home/app_runner/code/
-COPY .env /home/app_runner/code/
+COPY fuelgh/requirements/ /home/app_runner/code/
 RUN pip install -r prod.txt
 COPY . /home/app_runner/code/
+USER root
+RUN chown -R app_runner:app_runner fuelgh/

@@ -47,6 +47,9 @@ class UserDetail(generics.RetrieveAPIView):
 
 # OMC views
 class OmcList(generics.ListAPIView):
+    """
+    You can order by `petrol_price` and `diesel_price`
+    """
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Omc.objects.all()
     serializer_class = OmcSerializer
@@ -54,7 +57,7 @@ class OmcList(generics.ListAPIView):
     ordering_fields = ['petrol_price', 'diesel_price']
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save()
 
 
 class OmcDetail(generics.RetrieveUpdateAPIView):
@@ -108,4 +111,4 @@ class FuelStationList(generics.ListCreateAPIView):
         return ordered_queryset
 
     def perform_create(self, serializer):
-        serializer.save(uploader=self.request.user)
+        serializer.save()

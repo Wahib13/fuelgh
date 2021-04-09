@@ -1,21 +1,13 @@
 version: "3.9"
-
+# base compose. utilizes overrides
+# dev: docker-compose up. deployment: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 services:
-  nginx:
-    env_file:
-      - .env
-    image: nginx
-    volumes:
-      - ./conf.d/:/etc/nginx/conf.d/
-      - ./fuelgh/static/:/etc/nginx/static/
-    ports:
-      - 80:80
   web:
     env_file:
       - .env
     user: app_runner
     build: .
-    command: uwsgi --ini uwsgi.ini --socket :${SERVICE_PORT}
+    command: sh -c "python fuelgh/manage.py collectstatic --no-input && python fuelgh/manage.py migrate && uwsgi --ini uwsgi.ini --socket :${SERVICE_PORT}"
     ports:
       - 18001:18001
     depends_on:
@@ -49,14 +41,13 @@ services:
     depends_on:
       - redis
       - web
-#  flower:
-#    env_file:
-#      - .env
-#    build:
-#      context: .
-#    working_dir: /home/app_runner/code/fuelgh
-#    command: flower -A fuelapp --port=5555
-#    depends_on:
-#      - celery_worker
-#    ports:
-#    - 5555:5555
+  celery_beat:
+    env_file:
+      - .env
+    user: app_runner
+    image: fuelgh_app
+    working_dir: /home/app_runner/code/fuelgh
+    command: celery -A fuelapp beat -l debug
+    depends_on:
+      - redis
+      - web

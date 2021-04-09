@@ -1,0 +1,15 @@
+version: "3.9"
+# only for running tests
+services:
+  web:
+    env_file:
+      - .env
+    user: app_runner
+    build: .
+    working_dir: /home/app_runner/code/fuelgh/
+    command: python manage.py test
+#    ports:
+#      - 18001:18001
+    depends_on:
+      - db
+      - redis

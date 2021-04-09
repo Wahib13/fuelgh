@@ -1,0 +1,10 @@
+version: "3.9"
+# local dev environment
+services:
+  web:
+    volumes:
+      - ./fuelgh:/home/app_runner/code/fuelgh/
+    working_dir: /home/app_runner/code/fuelgh/
+    command: sh -c "python manage.py collectstatic --no-input && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
