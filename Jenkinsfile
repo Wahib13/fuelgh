@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                bat 'docker-compose up --build'
+                cd cd_scripts
+                bat 'build_script.bat'
             }
         }
     }
