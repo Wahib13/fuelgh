@@ -7,6 +7,7 @@ services:
       - .env
     user: app_runner
     build: .
+    image: fuelgh_app
     command: sh -c "python fuelgh/manage.py collectstatic --no-input && python fuelgh/manage.py migrate && uwsgi --ini uwsgi.ini --socket :${SERVICE_PORT}"
     ports:
       - 18001:18001
@@ -34,8 +35,7 @@ services:
     env_file:
       - .env
     user: app_runner
-    build:
-      context: .
+    image: fuelgh_app
     working_dir: /home/app_runner/code/fuelgh
     command: celery -A fuelapp worker -l info
     depends_on:
