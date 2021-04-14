@@ -21,10 +21,11 @@ def update_prices(self):
     # download the file and save temporarily
     r = requests.get(url, stream=True)
     filename = '/home/app_runner/code/fuelgh/prices_latest.xlsx'
+    with open(filename, 'wb') as f:
+        # save the file on disk
+        shutil.copyfileobj(r.raw, f)
     with open(filename, 'rb+') as f:
         UpdateTask.objects.create(task_id=self.request.id, excel_file=File(f))
-        # recopy the raw file so that openpyxl can read it
-        shutil.copyfileobj(r.raw, f)
     book = load_workbook(filename=filename)
     sheet_prices = book['OMCs and LPGMCs Ex-Pump Prices']
     i = 0
