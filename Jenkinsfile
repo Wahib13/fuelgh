@@ -3,8 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                cd cd_scripts
-                bat 'build_script.bat'
+                bat 'cd_scripts\build_script.bat'
             }
         }
     }
