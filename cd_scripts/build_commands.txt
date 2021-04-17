@@ -1,0 +1,4 @@
+cd FuelGh
+git fetch
+git merge origin/dev
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build

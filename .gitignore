@@ -7,4 +7,4 @@ config/production.ini
 *.sql
 fuelgh/fuelapp/settings_local.py
 fuelgh/celerybeat-schedule
-cd_scripts/*
+#cd_scripts/*
