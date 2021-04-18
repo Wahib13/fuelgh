@@ -5,9 +5,9 @@
 
 * Quick summary
 * Version 2.0
-This app is currently running in open beta at http://fuelgh.com
-This repository is for a web app that displays prices of fuel in different companies in Ghana. Written in Python, using the Django web framework. In the absence of a publicly available API to update the prices, we manually update the prices using an Excel sheet from http://www.npa.gov.gh/. (See "How do I get set up?"). 
-There is the foundation for a basic REST API so we could possibly become that publicly available API for indicative prices for fuel in Ghana.
+This repository is for a web app that displays prices of fuel in different companies in Ghana. It also exposes REST API endpoints to query/update the prices. It is written in Python, using the Django web framework.
+This web app is currently running at http://fuelgh.com/
+The API (Swagger UI) - http://fuelgh.com/swagger-ui/
 
 ### Who is this repository for? (Why become a Contributor) ###
 Almost all consumer products have a way consumers can compare prices and buy what suits their budget. I believe there is the need to create an authoritative source that tracks the prices of crude oil products and help consumers make an informed decision when buying diesel/petrol.
@@ -22,4 +22,7 @@ If you share this belief, then kindly consider becoming a contributor.
 * Run **python manage.py createsuperuser** and follow the prompts to create a super user
 * Run the tests **python manage.py test**
 * Run **python manage.py reload_omcs** to get the latest prices
-* Visit http://localhost/
+* Visit http://localhost:8000/
+
+### How do I run it in production? ###
+* Run **docker-compose up -f docker-compose.yml -f docker-compose.prod.yml -up -d --build**
