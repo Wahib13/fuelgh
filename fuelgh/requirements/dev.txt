@@ -12,7 +12,7 @@ click-plugins==1.1.1
 click-repl==0.1.6
 coreapi==2.3.3
 coreschema==0.0.4
-Django==3.1.6
+Django==3.1.9
 django-celery-results==2.0.1
 django-filter==2.4.0
 djangorestframework==3.12.2
